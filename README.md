@@ -1,5 +1,9 @@
 # babel-plugin-inline-svg
 
+[![NPM version][npm-image]][npm-url]
+[![Downloads][downloads-image]][npm-url]
+[![Dependency status][david-dm-image]][david-dm-url]
+
 Import raw SVG files into your code, optimising with [SVGO](https://github.com/svg/svgo/), and removing ID namespace conflicts.
 
 ## What it do
@@ -103,3 +107,9 @@ require('babel-core').transform('code', {
 ---
 
 Big thanks to [inline-react-svg](https://github.com/kesne/babel-plugin-inline-react-svg), which this project is based on.
+
+[npm-url]: https://npmjs.org/package/babel-plugin-inline-svg
+[downloads-image]: http://img.shields.io/npm/dm/babel-plugin-inline-svg.svg
+[npm-image]: http://img.shields.io/npm/v/babel-plugin-inline-svg.svg
+[david-dm-url]:https://david-dm.org/iest/babel-plugin-inline-svg
+[david-dm-image]:https://david-dm.org/iest/babel-plugin-inline-svg.svg
