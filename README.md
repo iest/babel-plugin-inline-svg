@@ -4,9 +4,11 @@
 [![Downloads][downloads-image]][npm-url]
 [![Dependency status][david-dm-image]][david-dm-url]
 
-Import raw SVG files into your code, optimising with [SVGO](https://github.com/svg/svgo/), and removing ID namespace conflicts.
+> Import raw SVG files into your code, optimising with [SVGO](https://github.com/svg/svgo/), and removing ID namespace conflicts.
 
 ## What it do
+
+### 1. Turns `import` statements into inline SVG strings
 
 So this:
 
@@ -17,7 +19,7 @@ import someSvg from 'some-svg.svg';
 Becomes this:
 
 ```js
-var someSvg = '<svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg"><title>home</title><path d="M37.6 24.104l-4.145-4.186v-6.389h-3.93v2.416L26.05 12.43a1.456 1.456 0 0 0-2.07 0L12.43 24.104a1.488 1.488 0 0 0 0 2.092c.284.288.658.431 1.031.431h1.733V38h6.517v-8.475h6.608V38h6.517V26.627h1.77v-.006c.36-.01.72-.145.995-.425a1.488 1.488 0 0 0 0-2.092" fill="#191919" fill-rule="evenodd"/></svg>';
+var someSvg = '<svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg"><title>home</title><path d="M37.6 24.104l-4.145-4.186v-6.389h-3.93v2.416L26.05 12.43a1.456 1.456 0 0 0-2.07 0L12.43 24.104a1.488 1.488 0 0 0 0 2.092c.284.288.658.431 1.031.431h1.733V38h6.517v-8.475h6.608V38h6.517V26.627h1.77v-.006c.36-.01.72-.145.995-.425a1.488 1.488 0 0 0 0-2.092" fill="#191919" fill-rule="evenodd" id="someSvg-someID"/></svg>';
 ```
 
 So you can do something like this maybe:
@@ -35,11 +37,30 @@ const NaughtyUsage = () => (
 );
 ```
 
-Works anywhere you use babel, not just for react.
+### 2. Namespaces `id`’s to prevent conflicts
 
-**The `cleanupIDs` SVGO plugin is enabled by default**, using the import declaration's name as the [`prefix` option](https://github.com/svg/svgo/blob/master/plugins%2FcleanupIDs.js#L12). This means you won't get `id` namespace conflicts across your various svg imports (which can be an issue).
+If you inline a lot of SVGs you might get namespace conflicts, which could be really annoying if you're styling your SVG in CSS and whatnot. This plugin solves that by combining some [regex trickery](./optimise.js#L30) with SVGO's `cleanupIDs` plugin.
 
-If you'd rather not do this, simply pass in your own `cleanupIDs` option when passing in SVGO options to the plugin in your babel options (example below).
+So given this simple `cheese.svg` file:
+
+```svg
+<svg><circle cx="10" cy="10" r="50" id="someCircle"></circle></svg>
+```
+
+Which you then import like so:
+
+```js
+import wheelOfCheese from 'cheese.svg';
+```
+
+You get the following output:
+
+```js
+var wheelOfCheese = '<svg><circle cx="10" cy="10" r="50" id="wheelOfCheese-someCircle"></circle></svg>';
+```
+
+If you want to disable this feature, just pass an empty plugins list as a [plugin option](./__tests__/emptyOpts.test.js#L11) to SVGO in your babel settings (you could also pass `{ cleanupIDs: true }`, which is just the SVGO default).
+
 
 ## Installation
 
@@ -64,8 +85,10 @@ npm install --save-dev babel-plugin-inline-svg
 #### Options
 
 - *`ignorePattern`* - A pattern that imports will be tested against to selectively ignore imports.
-- *`svgo`* - svgo options (`false` to disable). Example:
+- *`svgo`* - svgo options. Example .babelrc:
+
 ```js
+
 {
   "plugins": [
     [
@@ -74,11 +97,10 @@ npm install --save-dev babel-plugin-inline-svg
         "ignorePattern": /ignoreAThing/,
         "svgo": {
           "plugins": [
+            {"cleanupIDs": false},
             {
               "removeDoctype": true,
-            },
-            // Pass your own "cleanupIDs" option to override the default behaviour if you like:
-            "cleanupIDs": false
+            }
           ]
 
         }
@@ -88,6 +110,8 @@ npm install --save-dev babel-plugin-inline-svg
 }
 
 ```
+
+**Note:** This babel plugin disables the `cleanupIDs` SVGO plugin by default (to facilitate the ID namespacing). [Pass your own SVGO options](./__tests__/withOpts.test.js#L11) to override this default.
 
 ### Via CLI
 
@@ -104,7 +128,11 @@ require('babel-core').transform('code', {
 }) // => { code, map, ast };
 ```
 
----
+# How it works
+
+The [babel part](./babel-plugin-inline-svg.js) is mostly copy-pasta'd from [inline-react-svg](https://github.com/kesne/babel-plugin-inline-react-svg) (thanks [@kesne](https://github.com/kesne)!), with
+
+# Thanks
 
 Big thanks to [inline-react-svg](https://github.com/kesne/babel-plugin-inline-react-svg), which this project is based on.
 
