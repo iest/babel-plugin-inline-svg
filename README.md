@@ -56,7 +56,7 @@ npm install --save-dev babel-plugin-inline-svg
 ```json
 {
   "plugins": [
-    "inline-react-svg"
+    "inline-svg"
   ]
 }
 ```
