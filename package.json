@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-inline-svg",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Babel plugin to optimise and inline svg",
   "main": "index.js",
   "repository": {
@@ -13,16 +13,18 @@
     "optimise.js"
   ],
   "scripts": {
-    "test": "node test.js"
+    "test": "jest"
   },
   "author": "Iestyn Williams <iest@me.com>",
   "license": "MIT",
   "devDependencies": {
-    "babel-core": "^6.26.0"
+    "babel-core": "^6.26.0",
+    "jest": "^22.4.3"
   },
   "dependencies": {
     "babel-template": "^6.26.0",
-    "resolve-from": "^3.0.0",
-    "svgo": "^0.7.2"
+    "resolve-from": "^4.0.0",
+    "svgo": "^1.0.3",
+    "synchronized-promise": "^0.0.4"
   }
 }
