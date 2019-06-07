@@ -25,6 +25,6 @@
     "babel-template": "^6.26.0",
     "resolve-from": "^4.0.0",
     "svgo": "^1.0.3",
-    "synchronized-promise": "^0.0.4"
+    "synchronized-promise": "^0.1.0"
   }
 }
