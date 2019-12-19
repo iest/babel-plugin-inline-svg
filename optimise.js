@@ -22,10 +22,10 @@ module.exports = function optimise(name, content, opts) {
     new Promise((res, rej) => {
       svgo.optimize(content).then(res, rej);
     });
-  const optimizeSync = deasync(optimize);
+ // const optimizeSync = deasync(optimize);
 
   try {
-    let { data: output } = optimizeSync(content);
+     let output = content;
 
     ids.forEach(id => {
       const r = makeRegex(id);
