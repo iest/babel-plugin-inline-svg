@@ -1,30 +1,39 @@
 {
   "name": "babel-plugin-inline-svg",
   "version": "1.0.1",
-  "description": "Babel plugin to optimise and inline svg",
-  "main": "index.js",
+  "description": "Babel plugin to optimize and inline SVG",
   "repository": {
     "url": "git@github.com:iest/babel-plugin-inline-svg.git",
     "type": "git"
   },
+  "author": "Iestyn Williams <iest@me.com>",
+  "contributors": [
+    {
+      "name": "Jaime Pastor",
+      "email": "moelders@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "main": "lib/index.js",
   "files": [
-    "index.js",
-    "babel-plugin-inline-svg.js",
-    "optimise.js"
+    "lib"
   ],
   "scripts": {
-    "test": "jest"
+    "lint": "eslint . --ext .js --cache",
+    "test": "cross-env BABEL_ENV=test jest --config jest.config.js --colors --env node",
+    "test:watch": "npm run test -- --watch"
   },
-  "author": "Iestyn Williams <iest@me.com>",
-  "license": "MIT",
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "jest": "^22.4.3"
+    "babel-core": "^6.26.3",
+    "build-tools-babel": "1.2.0",
+    "build-tools-javascript": "1.2.0",
+    "build-tools-jest": "1.2.0",
+    "cross-env": "7.0.2",
+    "jest": "^26.0.1"
   },
   "dependencies": {
     "babel-template": "^6.26.0",
     "resolve-from": "^4.0.0",
-    "svgo": "^1.0.3",
-    "synchronized-promise": "^0.1.0"
+    "svgo": "^1.3.2"
   }
 }

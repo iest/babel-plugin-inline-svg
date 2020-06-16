@@ -1,1 +1,5 @@
+*.bck
+.eslintcache
+.vscode
 node_modules
+test/coverage
