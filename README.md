@@ -39,7 +39,33 @@ const NaughtyUsage = () => (
 
 ### 2. Namespaces `id`’s to prevent conflicts
 
-If you inline a lot of SVGs you might get namespace conflicts, which could be really annoying if you're styling your SVG in CSS and whatnot. This plugin solves that by combining some [regex trickery](./optimise.js#L30) with SVGO's `cleanupIDs` plugin.
+If you inline a lot of SVGs you might get namespace conflicts, which could be really annoying if you're styling your SVG in CSS and whatnot. This plugin solves that by combining some [regex trickery](./optimize.js#L30) with SVGO's `prefixIds` plugin.
+
+Configure it via `.babelrc` file:
+
+```json
+{
+  "plugins": [
+    [
+      "inline-svg",
+      {
+        "svgo": {
+          "plugins": [
+            {
+              "prefixIds": {
+                "delim": "-",
+                "prefix": "customPrefix",
+                "prefixIds": true,
+                "prefixClassNames": false
+              }
+            }
+          ]
+        }
+      }
+    ]
+  ]
+}
+```
 
 So given this simple `cheese.svg` file:
 
@@ -56,11 +82,10 @@ import wheelOfCheese from 'cheese.svg';
 You get the following output:
 
 ```js
-var wheelOfCheese = '<svg><circle cx="10" cy="10" r="50" id="wheelOfCheese-someCircle"></circle></svg>';
+var wheelOfCheese = '<svg><circle cx="10" cy="10" r="50" id="customPrefix-someCircle"></circle></svg>';
 ```
 
-If you want to disable this feature, just pass an empty plugins list as a [plugin option](./__tests__/emptyOpts.test.js#L11) to SVGO in your babel settings (you could also pass `{ cleanupIDs: true }`, which is just the SVGO default).
-
+If you want to disable this feature, just pass an empty plugins list as a [plugin option](./test/specs/empty-options.spec.js#L11) to SVGO in your babel settings.
 
 ## Installation
 

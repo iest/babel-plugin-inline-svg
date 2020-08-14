@@ -1,0 +1,8 @@
+{
+  "extends": [
+    "adidas-env/test"
+  ],
+  "env": {
+    "jest": true
+  }
+}
