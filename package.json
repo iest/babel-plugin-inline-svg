@@ -29,7 +29,12 @@
     "build-tools-javascript": "1.2.0",
     "build-tools-jest": "1.2.0",
     "cross-env": "7.0.2",
-    "jest": "^26.4.0"
+    "eslint": "^7.2.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "jest": "^26.4.0",
+    "prettier": "2.0.5"
   },
   "dependencies": {
     "babel-template": "^6.26.0",
