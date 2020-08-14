@@ -110,6 +110,7 @@ npm install --save-dev babel-plugin-inline-svg
 #### Options
 
 - _`ignorePattern`_ - A pattern that imports will be tested against to selectively ignore imports.
+- _`optimize`_ - set to `false` to disable running the svg through SVGO
 - _`svgo`_ - svgo options. Example .babelrc:
 
 ```js
