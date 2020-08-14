@@ -13,20 +13,21 @@
 So this:
 
 ```js
-import someSvg from 'some-svg.svg';
+import someSvg from "some-svg.svg";
 ```
 
 Becomes this:
 
 ```js
-var someSvg = '<svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg"><title>home</title><path d="M37.6 24.104l-4.145-4.186v-6.389h-3.93v2.416L26.05 12.43a1.456 1.456 0 0 0-2.07 0L12.43 24.104a1.488 1.488 0 0 0 0 2.092c.284.288.658.431 1.031.431h1.733V38h6.517v-8.475h6.608V38h6.517V26.627h1.77v-.006c.36-.01.72-.145.995-.425a1.488 1.488 0 0 0 0-2.092" fill="#191919" fill-rule="evenodd" id="someSvg-someID"/></svg>';
+var someSvg =
+  '<svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg"><title>home</title><path d="M37.6 24.104l-4.145-4.186v-6.389h-3.93v2.416L26.05 12.43a1.456 1.456 0 0 0-2.07 0L12.43 24.104a1.488 1.488 0 0 0 0 2.092c.284.288.658.431 1.031.431h1.733V38h6.517v-8.475h6.608V38h6.517V26.627h1.77v-.006c.36-.01.72-.145.995-.425a1.488 1.488 0 0 0 0-2.092" fill="#191919" fill-rule="evenodd" id="someSvg-someID"/></svg>';
 ```
 
 So you can do something like this maybe:
 
 ```js
-import React from 'react';
-import someSvg from 'some-svg.svg';
+import React from "react";
+import someSvg from "some-svg.svg";
 
 const NaughtyUsage = () => (
   <span
@@ -76,13 +77,14 @@ So given this simple `cheese.svg` file:
 Which you then import like so:
 
 ```js
-import wheelOfCheese from 'cheese.svg';
+import wheelOfCheese from "cheese.svg";
 ```
 
 You get the following output:
 
 ```js
-var wheelOfCheese = '<svg><circle cx="10" cy="10" r="50" id="customPrefix-someCircle"></circle></svg>';
+var wheelOfCheese =
+  '<svg><circle cx="10" cy="10" r="50" id="customPrefix-someCircle"></circle></svg>';
 ```
 
 If you want to disable this feature, just pass an empty plugins list as a [plugin option](./test/specs/empty-options.spec.js#L11) to SVGO in your babel settings.
@@ -101,16 +103,14 @@ npm install --save-dev babel-plugin-inline-svg
 
 ```json
 {
-  "plugins": [
-    "inline-svg"
-  ]
+  "plugins": ["inline-svg"]
 }
 ```
 
 #### Options
 
-- *`ignorePattern`* - A pattern that imports will be tested against to selectively ignore imports.
-- *`svgo`* - svgo options. Example .babelrc:
+- _`ignorePattern`_ - A pattern that imports will be tested against to selectively ignore imports.
+- _`svgo`_ - svgo options. Example .babelrc:
 
 ```js
 
@@ -146,11 +146,10 @@ $ babel --plugins inline-react-svg script.js
 
 ### Via Node API
 
-
 ```javascript
-require('babel-core').transform('code', {
-  plugins: ['inline-react-svg']
-}) // => { code, map, ast };
+require("babel-core").transform("code", {
+  plugins: ["inline-react-svg"],
+}); // => { code, map, ast };
 ```
 
 # How it works
@@ -164,5 +163,5 @@ Big thanks to [inline-react-svg](https://github.com/kesne/babel-plugin-inline-re
 [npm-url]: https://npmjs.org/package/babel-plugin-inline-svg
 [downloads-image]: http://img.shields.io/npm/dm/babel-plugin-inline-svg.svg
 [npm-image]: http://img.shields.io/npm/v/babel-plugin-inline-svg.svg
-[david-dm-url]:https://david-dm.org/iest/babel-plugin-inline-svg
-[david-dm-image]:https://david-dm.org/iest/babel-plugin-inline-svg.svg
+[david-dm-url]: https://david-dm.org/iest/babel-plugin-inline-svg
+[david-dm-image]: https://david-dm.org/iest/babel-plugin-inline-svg.svg

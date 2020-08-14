@@ -1,7 +1,5 @@
 {
-  "extends": [
-    "adidas-env/test"
-  ],
+  "extends": ["airbnb-base", "prettier"],
   "env": {
     "jest": true
   }
