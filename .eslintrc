@@ -1,7 +1,3 @@
 {
-  "extends": [
-    "adidas-env/node",
-    "adidas-es9",
-    "adidas-babel"
-  ]
+  "extends": ["airbnb-base", "prettier"]
 }
