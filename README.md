@@ -6,6 +6,21 @@
 
 > Import raw SVG files into your code, optimising with [SVGO](https://github.com/svg/svgo/), and removing ID namespace conflicts.
 
+<!-- TOC depthFrom:2 depthTo:3 -->
+
+- [What it do](#what-it-do)
+  - [1. Turns `import` statements into inline SVG strings](#1-turns-import-statements-into-inline-svg-strings)
+  - [2. Optimises the SVG through SVGO](#2-optimises-the-svg-through-svgo)
+  - [3. Namespaces `id`’s to prevent conflicts](#3-namespaces-ids-to-prevent-conflicts)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Via `.babelrc` (Recommended)](#via-babelrc-recommended)
+  - [Options](#options)
+  - [Via CLI](#via-cli)
+  - [Via Node API](#via-node-api)
+
+<!-- /TOC -->
+
 ## What it do
 
 ### 1. Turns `import` statements into inline SVG strings
@@ -38,40 +53,20 @@ const NaughtyUsage = () => (
 );
 ```
 
-### 2. Namespaces `id`’s to prevent conflicts
+### 2. Optimises the SVG through SVGO
 
-If you inline a lot of SVGs you might get namespace conflicts, which could be really annoying if you're styling your SVG in CSS and whatnot. This plugin solves that by combining some [regex trickery](./optimize.js#L30) with SVGO's `prefixIds` plugin.
+Does what it says on the tin. You can pass options to the SVGO processor with an `svgo` object in options.
 
-Configure it via `.babelrc` file:
+You can also disable this option if you really want, with `disableSVGO: true`.
 
-```json
-{
-  "plugins": [
-    [
-      "inline-svg",
-      {
-        "svgo": {
-          "plugins": [
-            {
-              "prefixIds": {
-                "delim": "-",
-                "prefix": "customPrefix",
-                "prefixIds": true,
-                "prefixClassNames": false
-              }
-            }
-          ]
-        }
-      }
-    ]
-  ]
-}
-```
+### 3. Namespaces `id`’s to prevent conflicts
+
+If you inline a lot of SVGs you might get namespace conflicts, which could be really annoying if you're styling your SVG in CSS and whatnot. This plugin solves that with some some [regex trickery](.lib/optimize.js#L29). The namespace of the ID comes from the name of import/require variable.
 
 So given this simple `cheese.svg` file:
 
 ```svg
-<svg><circle cx="10" cy="10" r="50" id="someCircle"></circle></svg>
+<svg><circle cx="10" cy="10" r="50" id="CIRCLE"></circle></svg>
 ```
 
 Which you then import like so:
@@ -84,10 +79,10 @@ You get the following output:
 
 ```js
 var wheelOfCheese =
-  '<svg><circle cx="10" cy="10" r="50" id="customPrefix-someCircle"></circle></svg>';
+  '<svg><circle cx="10" cy="10" r="50" id="wheelOfCheese-CIRCLE"></circle></svg>';
 ```
 
-If you want to disable this feature, just pass an empty plugins list as a [plugin option](./test/specs/empty-options.spec.js#L11) to SVGO in your babel settings.
+To disable this feature, pass `disableNamespaceIds: true` in the options.
 
 ## Installation
 
@@ -107,11 +102,14 @@ npm install --save-dev babel-plugin-inline-svg
 }
 ```
 
-#### Options
+### Options
 
-- _`ignorePattern`_ - A pattern that imports will be tested against to selectively ignore imports.
-- _`optimize`_ - set to `false` to disable running the svg through SVGO
-- _`svgo`_ - svgo options. Example .babelrc:
+- _`ignorePattern`_ - A string regex that imports will be tested against so you can ignore them
+- _`disableSVGO`_ - set to `false` to disable running the svg through SVGO
+- _`disableNamespaceIds`_ - set to `false` to leave all id's as they are
+- _`svgo`_ - an object of SVGO options.
+
+Example .babelrc:
 
 ```js
 
@@ -120,12 +118,12 @@ npm install --save-dev babel-plugin-inline-svg
     [
       "inline-svg",
       {
-        "ignorePattern": /ignoreAThing/,
+        "ignorePattern": "icons",
+        "disableNamespaceIds": true,
         "svgo": {
           "plugins": [
-            {"cleanupIDs": false},
             {
-              "removeDoctype": true,
+              "removeDimensions": true,
             }
           ]
 
@@ -137,29 +135,23 @@ npm install --save-dev babel-plugin-inline-svg
 
 ```
 
-**Note:** This babel plugin disables the `cleanupIDs` SVGO plugin by default (to facilitate the ID namespacing). [Pass your own SVGO options](./__tests__/withOpts.test.js#L11) to override this default.
+**Note:** To function correctly, this babel plugin disables the `cleanupIDs` SVGO plugin by default (to facilitate the ID namespacing). [Pass your own SVGO options](./__tests__/withOpts.test.js#L11) to override this default.
+
+**Also note:** the ID namespaceing _can_ be done with a similar SVGO plugin, `prefixIds` — however this prefix is a static string so you might still end up with namespace conflicts.
 
 ### Via CLI
 
 ```sh
-$ babel --plugins inline-react-svg script.js
+$ babel --plugins inline-svg script.js
 ```
 
 ### Via Node API
 
 ```javascript
 require("babel-core").transform("code", {
-  plugins: ["inline-react-svg"],
+  plugins: ["inline-svg"],
 }); // => { code, map, ast };
 ```
-
-# How it works
-
-The [babel part](./babel-plugin-inline-svg.js) is mostly copy-pasta'd from [inline-react-svg](https://github.com/kesne/babel-plugin-inline-react-svg) (thanks [@kesne](https://github.com/kesne)!), with
-
-# Thanks
-
-Big thanks to [inline-react-svg](https://github.com/kesne/babel-plugin-inline-react-svg), which this project is based on.
 
 [npm-url]: https://npmjs.org/package/babel-plugin-inline-svg
 [downloads-image]: http://img.shields.io/npm/dm/babel-plugin-inline-svg.svg
