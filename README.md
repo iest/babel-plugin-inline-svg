@@ -107,7 +107,7 @@ npm install --save-dev babel-plugin-inline-svg
 - _`ignorePattern`_ - A string regex that imports will be tested against so you can ignore them
 - _`disableSVGO`_ - set to `false` to disable running the svg through SVGO
 - _`disableNamespaceIds`_ - set to `false` to leave all id's as they are
-- _`svgo`_ - an object of SVGO options.
+- _`svgo`_ - an object of SVGO options
 
 Example .babelrc:
 
@@ -135,7 +135,7 @@ Example .babelrc:
 
 ```
 
-**Note:** To function correctly, this babel plugin disables the `cleanupIDs` SVGO plugin by default (to facilitate the ID namespacing). [Pass your own SVGO options](./__tests__/withOpts.test.js#L11) to override this default.
+**Note:** To function correctly, this babel plugin disables the `cleanupIDs` SVGO plugin by default (to facilitate the ID namespacing). When passing your own SVGO options you might want to remove the `cleanupIDs` plugin so namespacing still works.
 
 **Also note:** the ID namespaceing _can_ be done with a similar SVGO plugin, `prefixIds` — however this prefix is a static string so you might still end up with namespace conflicts.
 

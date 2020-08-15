@@ -28,7 +28,11 @@ import test from './test/fixtures/icons.svg';`);
       plugins: [
         [
           "./lib/index.js",
-          { svgo: { plugins: [{ removeXMLProcInst: false }] } },
+          {
+            svgo: {
+              plugins: [{ cleanupIDs: false }, { removeXMLProcInst: false }],
+            },
+          },
         ],
       ],
     });
