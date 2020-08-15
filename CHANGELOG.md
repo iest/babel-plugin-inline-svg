@@ -1,3 +1,7 @@
+# 1.1.1
+
+- Don't deepmerge SVGO opts
+
 # 1.1.0
 
 - Add `disableSVGO` option
