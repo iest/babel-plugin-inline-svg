@@ -84,6 +84,11 @@ var wheelOfCheese =
 
 To disable this feature, pass `disableNamespaceIds: true` in the options.
 
+### 4. Exporting as dataURI format
+
+If you need to use the output directly in an image source (<img src=> or in a css background-image, for example), you can pass `exportDataURI: true` in the options.
+The output will be the svg encoded as base64 and prefixed with `data:image/svg+xml;base64,`
+
 ## Installation
 
 ```
@@ -108,6 +113,7 @@ npm install --save-dev babel-plugin-inline-svg
 - _`disableSVGO`_ - set to `false` to disable running the svg through SVGO
 - _`disableNamespaceIds`_ - set to `false` to leave all id's as they are
 - _`svgo`_ - an object of SVGO options
+- _`exportDataURI`_ - set to `true` to export encoded as base64 and prefixed with `data:image/svg+xml;base64,`
 
 Example .babelrc:
 
