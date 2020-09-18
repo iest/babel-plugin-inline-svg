@@ -12,6 +12,7 @@
   - [1. Turns `import` statements into inline SVG strings](#1-turns-import-statements-into-inline-svg-strings)
   - [2. Optimises the SVG through SVGO](#2-optimises-the-svg-through-svgo)
   - [3. Namespaces `id`’s to prevent conflicts](#3-namespaces-ids-to-prevent-conflicts)
+  - [4. Exporting as dataURI format](#4-exporting-as-datauri-format)
 - [Installation](#installation)
 - [Usage](#usage)
   - [Via `.babelrc` (Recommended)](#via-babelrc-recommended)
