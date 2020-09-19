@@ -1,3 +1,9 @@
+# 1.2.0
+
+- Change `namespaceIds` arg order to conformn with other transform functions
+- Compose the transform functions to make it easier to add new ones
+- New feature: `exportDataURI`, to make it easy to use the imported SVG as a data URI
+
 # 1.1.1
 
 - Don't deepmerge SVGO opts
